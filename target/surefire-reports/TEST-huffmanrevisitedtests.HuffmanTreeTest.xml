@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite tests="3" failures="2" name="huffmanrevisitedtests.HuffmanTreeTest" time="0.012" errors="0" skipped="0">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="java.vm.version" value="12.0.2+10"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-12.0.2\bin"/>
+    <property name="maven.multiModuleProjectDirectory" value="C:\Users\Kevin\Documents\NetBeansProjects\HuffmanRevisitedTests"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="java.vendor.url" value="https://java.oracle.com/"/>
+    <property name="guice.disable.misplaced.annotation.check" value="true"/>
+    <property name="path.separator" value=";"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="user.script" value=""/>
+    <property name="user.country" value="GB"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="test" value="huffmanrevisitedtests.HuffmanTreeTest"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="C:\Users\Kevin\Documents\NetBeansProjects\HuffmanRevisitedTests"/>
+    <property name="java.vm.compressedOopsMode" value="32-bit"/>
+    <property name="java.runtime.version" value="12.0.2+10"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.io.tmpdir" value="C:\Users\Kevin\AppData\Local\Temp\"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.variant" value=""/>
+    <property name="os.name" value="Windows 10"/>
+    <property name="maven.ext.class.path" value="C:\Program Files\NetBeans-11.2\netbeans\java\maven-nblib\netbeans-eventspy.jar"/>
+    <property name="classworlds.conf" value="C:\Users\Kevin\Programs\apache-maven-3.6.3\bin\..\bin\m2.conf"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk-12.0.2\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files\Java\jdk-16\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files\Git\cmd;C:\Users\Kevin\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Python 3.8;C:\Users\Kevin\AppData\Local\Programs\Python\Python38-32;C:\Users\Kevin\dev\ccl;C:\Program Files\nodejs\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Users\Kevin\AppData\Local\Programs\Python\Python38-32\Scripts;C:\Users\Kevin\Programs\Ruby26-x64\bin\;C:\Program Files (x86)\Yarn\bin\;C:\Users\Kevin\Programs\sqlite3\;C:\Program Files\PostgreSQL\12\bin;C:\Users\Kevin\Programs\apache-maven-3.6.3\bin\;C:\Users\Kevin\AppData\Local\ffmpeg-avcodex64\bin;C:\Users\Kevin\dev\c\tcc-x64;C:\Program Files\CodeBlocks\MinGW\bin;C:\Program Files\Go\bin;C:\Users\Kevin\Programs\Ruby26-x64\bin;C:\Users\Kevin\AppData\Local\GitHubDesktop\bin;C:\Users\Kevin\AppData\Roaming\npm;C:\Users\Kevin\AppData\Local\Yarn\bin;C:\Program Files\heroku\bin;C:\Users\Kevin\AppData\Local\Microsoft\WindowsApps;C:\Users\Kevin\go\bin;."/>
+    <property name="maven.conf" value="C:\Users\Kevin\Programs\apache-maven-3.6.3\bin\../conf"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="java.class.version" value="56.0"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="10.0"/>
+    <property name="library.jansi.path" value="C:\Users\Kevin\Programs\apache-maven-3.6.3\bin\..\lib\jansi-native"/>
+    <property name="user.home" value="C:\Users\Kevin"/>
+    <property name="user.timezone" value="Europe/London"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.specification.version" value="12"/>
+    <property name="user.name" value="Kevin"/>
+    <property name="java.class.path" value="C:\Users\Kevin\Programs\apache-maven-3.6.3\bin\..\boot\plexus-classworlds-2.6.0.jar"/>
+    <property name="java.vm.specification.version" value="12"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -Dtest=huffmanrevisitedtests.HuffmanTreeTest -Dmaven.ext.class.path=C:\Program Files\NetBeans-11.2\netbeans\java\maven-nblib\netbeans-eventspy.jar -Dfile.encoding=UTF-8 test-compile surefire:test"/>
+    <property name="java.home" value="C:\Program Files\Java\jdk-12.0.2"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="java.version" value="12.0.2"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="maven.home" value="C:\Users\Kevin\Programs\apache-maven-3.6.3\bin\.."/>
+    <property name="file.separator" value="\"/>
+    <property name="java.version.date" value="2019-07-16"/>
+    <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.desktop" value="windows"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+  </properties>
+  <testcase classname="huffmanrevisitedtests.HuffmanTreeTest" name="huffmanrevisitedtests.HuffmanTreeTest.testGetRoot" time="0.004">
+    <failure type="java.lang.NullPointerException">java.lang.NullPointerException
+	at huffmanrevisitedtests.HuffmanTreeTest.testGetRoot(HuffmanTreeTest.java:50)
+</failure>
+    <system-out>getRoot
+</system-out>
+  </testcase>
+  <testcase classname="huffmanrevisitedtests.HuffmanTreeTest" name="huffmanrevisitedtests.HuffmanTreeTest.testRebuildFromCodings" time="0.007"/>
+  <testcase classname="huffmanrevisitedtests.HuffmanTreeTest" name="huffmanrevisitedtests.HuffmanTreeTest.testGetCodingsAsMap" time="0.001">
+    <failure type="java.lang.NullPointerException">java.lang.NullPointerException
+	at huffmanrevisitedtests.HuffmanTreeTest.testGetCodingsAsMap(HuffmanTreeTest.java:79)
+</failure>
+    <system-out>getCodingsAsMap
+</system-out>
+  </testcase>
+</testsuite>

@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: huffmanrevisitedtests.HuffmanTreeTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.012 sec <<< FAILURE!
+huffmanrevisitedtests.HuffmanTreeTest.testGetRoot()  Time elapsed: 0.004 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at huffmanrevisitedtests.HuffmanTreeTest.testGetRoot(HuffmanTreeTest.java:50)
+
+huffmanrevisitedtests.HuffmanTreeTest.testGetCodingsAsMap()  Time elapsed: 0.001 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at huffmanrevisitedtests.HuffmanTreeTest.testGetCodingsAsMap(HuffmanTreeTest.java:79)
+
