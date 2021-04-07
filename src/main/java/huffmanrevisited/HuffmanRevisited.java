@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 
 /**
@@ -23,9 +22,10 @@ public class HuffmanRevisited {
      */
     public static void main(String[] args) {
 	try {
-	    File file = new File("C:\\Users\\Kevin\\Documents\\NetBeansProjects\\HuffmanRevisited\\src\\huffmanrevisited\\twobytes.txt");
-	    InputStreamReader isr = new InputStreamReader(new FileInputStream(file), "UTF-8");
-	    long fileSize = file.length();
+	    File inp = new File("C:\\Users\\Kevin\\Documents\\NetBeansProjects\\HuffmanRevisited\\src\\main\\java\\huffmanrevisited\\hungry.txt");
+	    InputStreamReader isr = new InputStreamReader(new FileInputStream(inp), "UTF-8");
+	    long fileSize = inp.length();
+	    System.out.println("Input file size: " + fileSize);
 	    int buffSize = 0;
 	    if (fileSize > Integer.MAX_VALUE) {
 		throw new IOException("File must be smaller than 2GB.");
@@ -41,13 +41,17 @@ public class HuffmanRevisited {
 
 	    byte[] compressed = enc.encode(csq);
 	    HuffmanTree t = enc.getTree();
+	    HuffmanCompressedFile hcf = HuffmanCompressedFile.buildFrom(t.compact(), compressed, buffSize);
+	    File outp = new File("C:\\Users\\Kevin\\Documents\\NetBeansProjects\\HuffmanRevisited\\src\\main\\java\\huffmanrevisited\\output.huf");
+	    hcf.writeTo(outp);
+	    HuffmanCompressedFile loaded = HuffmanCompressedFile.loadFrom(outp);
 	    HuffmanDecoder dec = new HuffmanDecoder();
-
-
-	    System.out.println(dec.decodeDataUsingTree(csq.length(), compressed, t.getRoot()));
-   	}
+	    System.out.println("Loaded compacted tree " + BinaryConversions.byteArrayToBinCsq(loaded.compactedTree));
+	    System.out.println("Result:" + dec.decodeDataUsingCompactedTree(loaded.origCharsAmount, loaded.encodedData, loaded.compactedTree));
+	    System.out.println("Compression ratio " + (float)fileSize / (loaded.encodedData.length + loaded.compactedTree.length + 8));
+	}
 	catch (IOException e) {
-	    System.out.println("No encoding/decoding performed due to problem reading source file.");
+	    System.out.println("No encoding/decoding performed due to problem reading source file. " + e.getMessage());
 	} 
 }
     

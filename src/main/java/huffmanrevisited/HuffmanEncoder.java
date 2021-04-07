@@ -65,6 +65,7 @@ public class HuffmanEncoder {
 	    // after whatever unused bits (up to 7) are left
 	    // over in holding
 	    holding.append(m.get(csq.charAt(i))); 
+	    /*
 	    // process any full bytes straight away
 	    // while there are any full bytes in holding
 	    while (holding.length() >= 8) {
@@ -74,9 +75,12 @@ public class HuffmanEncoder {
 		byte madeIntoByte = binCsqToByte(willMakeAByte);
 		enc[bytesWritten++] = madeIntoByte;
 	    }
+*/
+	    
 
 	}
-	// zero-wrap incomplete, final byte!! And add it to encoded data
+	/*
+	// now to zero-wrap any data left over to complete a final byte!! And add it to encoded data
 	if (holding.length() > 0) {
 	    while (holding.length() < 8) {
 		holding.append('0');
@@ -89,37 +93,19 @@ public class HuffmanEncoder {
 	}
 
 	byte[] trimmed = Arrays.copyOf(enc, bytesWritten);
-	/*
-	System.out.println("Written " + bytesWritten);
-	System.out.println("Encoded first byte " + enc[0] + ", trimmed first " + trimmed[0]);
-	for (byte b : trimmed) {
-	    System.out.println("Testing, byte " + b);
-	}
-	*/
-
-    
 	return trimmed;
-
+	*/
+	// Ha... calling a static method shows that this really wants
+	// to be a plain function, not part of an object!
+	// Perhaps I should make a utility class instead!
+	return BinaryConversions.binCsqToByteArray(holding);
     }
-    /* file format:
-    int length of compressed data in chars
-    int amount of distinct chars coded
-    int amount of bytes of encoded data (this means it won't
-    deal with large files for now... later maybe we'll work
-    on saving intermediate work to disk)
-    interleaved 16bit char and 8bit byte values - the byte
-    is the length in bits of the code for that character!
-    block of binary data zero-padded at the end to the next byte boundary
-    representing all the character codes as a continuous stream
-    so the lengths of the character codes must be used to find the offset
-    and length **IN BITS** to extract a particular character code
-    continuous stream of encoded data, zero-padded at end
-    */
+
     public HuffmanTree getTree() {
 	return t;
     }
-    // this method should only be given a String of 8 1s or 0s. If 
-    // given a longer String, it will only work from the first 8 chars.
+    // this method should only be given a CharSequence (or String) of 8 1s or 0s. If 
+    // given a longer one, it will only work from the first 8 chars.
     // Chars other than 1 will be treated as 0s.
     private byte binCsqToByte(CharSequence s) {
 	byte b = 0;
@@ -133,16 +119,4 @@ public class HuffmanEncoder {
 	if (s.charAt(7) == '1') b+= 1;
 	return b;
     }
-    
-
-    
-    // a test method
-    private void printEncodingsMap(HashMap<Character, String> m) {
-
-	for (Character k : m.keySet()) {
-	    System.out.println("Character " + k + " has encoding " + m.get(k));
-	}
-    }
-
-
 }

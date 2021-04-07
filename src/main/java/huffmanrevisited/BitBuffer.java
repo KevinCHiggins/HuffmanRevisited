@@ -10,27 +10,27 @@ import java.nio.ByteBuffer;
 
 /**
  * Need to investigate if I can legit call this a "stream"
- * It takes a ByteBuffer and then feeds it back in single bits
- * to any client calling its nextBit() method
+ It takes a ByteBuffer and then feeds it back in single bits
+ to any client calling its get() method
  * @author Kevin Higgins
  */
-public class BytesToBitStream {
+public class BitBuffer {
     private ByteBuffer b;
     private byte currByte;
     private int inc;
-    public BytesToBitStream(byte[] ba) {
+    public BitBuffer(byte[] ba) {
 	b = ByteBuffer.wrap(ba);
 	currByte = b.get();
 	inc = 7;
     }
-
-    // not currently used as I decrement a count of characters in 
-    // HuffmanDecoder and stop calling this class's nextBit() when it runs out,
-    // so never reach the end of the ButeBuffer b in here
+    public byte[] getByteArray() {
+	return b.array();
+    }
+    // only used for testing so far
     public boolean hasBit() {
 	return b.hasRemaining() || inc > 0;
     }
-    public boolean nextBit() {
+    public boolean get() {
 	if (inc < 0) {
 	    inc = 7;
 	    currByte = b.get();

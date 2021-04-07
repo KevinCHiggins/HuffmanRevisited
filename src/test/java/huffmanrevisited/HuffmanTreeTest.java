@@ -73,6 +73,7 @@ public class HuffmanTreeTest {
     /**
      * Test of getCodingsAsMap method, of class HuffmanTree.
      */
+    
     @Test
     public void testGetCodingsAsMap() {
 	System.out.println("getCodingsAsMap");
@@ -82,6 +83,20 @@ public class HuffmanTreeTest {
 	assertEquals(expResult, result);
 	// TODO review the generated test code and remove the default call to fail.
 	fail("The test case is a prototype.");
+    }
+    @Test
+    public void testCompact() {
+	System.out.println("compact");
+	HuffmanEncoder enc = new HuffmanEncoder();
+
+	byte[] compressed = enc.encode("A");
+	HuffmanTree instance = enc.getTree();
+	System.out.println("Chars in map from tree: " + instance.getCodingsAsMap().size());
+	byte[] compacted = instance.compact();
+	assertEquals(new byte[]{(byte) 128, (byte) 0, (byte) 32, (byte) 128}, compacted);
+	System.out.println("Compacted tree: " + BinaryConversions.byteArrayToBinCsq(compacted) + ". " + compacted.length + " bytes.");
+
+	
     }
     
 }

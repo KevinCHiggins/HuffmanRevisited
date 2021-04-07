@@ -22,6 +22,11 @@ public class HuffmanTree {
     public HuffmanTreeNode getRoot() {
 	return root;
     }
+    public void setRoot(HuffmanTreeNode n) {
+	if (root == null) {
+	    root = n;
+	}
+    }
     public HuffmanTree() {
 	
     }
@@ -101,6 +106,36 @@ public class HuffmanTree {
 	}
 	leftCodings.putAll(rightCodings);
 	return leftCodings;	
+    }
+    // a depth first traversal yielding nodes in pre-order
+    public List<HuffmanTreeNode> asNodesInPreOrder() {
+	return asNodesInPreOrder(root);
+    }
+    private List<HuffmanTreeNode> asNodesInPreOrder(HuffmanTreeNode node) {	
+	List l = new LinkedList<HuffmanTreeNode>();
+	l.add(node);
+	if (node.left != null) l.addAll(asNodesInPreOrder(node.left));
+	if (node.right != null) l.addAll(asNodesInPreOrder(node.right));
+	return l;
+    }
+    public byte[] compact() {
+	//StringBuilder sb = new StringBuilder(compactedSubtreeAsBinCsq(root));
+	return BinaryConversions.binCsqToByteArray(compactedSubtreeAsBinCsq(root));
+    }
+    private CharSequence compactedSubtreeAsBinCsq(HuffmanTreeNode node) {
+	StringBuilder sb = new StringBuilder();
+	if (node.c != null) {
+	    sb.append('1'); // an idea from Wikipedia article - 1 signifies a leaf
+	    sb.append(BinaryConversions.charToBinCsq(node.c));
+	    System.out.println("compactedSubtreeAsBinCsq: added CharSequence " + BinaryConversions.charToBinCsq(node.c));
+	}
+	else {
+	    sb.append('0'); // 0 signifies a parent
+	    sb.append(compactedSubtreeAsBinCsq(node.left));
+	    sb.append(compactedSubtreeAsBinCsq(node.right));
+	}
+	System.out.println("compactedSubtreeAsBinCsq: StringBuilder: " + sb);
+	return sb;
     }
     /*
     private class HuffmanEncodedChar {

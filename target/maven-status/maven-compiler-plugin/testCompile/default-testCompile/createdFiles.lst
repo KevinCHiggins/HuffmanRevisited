@@ -1,2 +1,6 @@
-huffmanrevisitedtests\HuffmanEncoderTest.class
-huffmanrevisitedtests\HuffmanTreeTest.class
+huffmanrevisited\HuffmanDecoderTest.class
+huffmanrevisited\HuffmanTreeTest.class
+huffmanrevisited\HuffmanEncoderTest.class
+huffmanrevisited\TestData.class
+huffmanrevisited\HuffmanCompressedFileTest.class
+huffmanrevisited\SavedCodingsExtractorTest.class
