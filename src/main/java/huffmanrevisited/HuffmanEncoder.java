@@ -50,7 +50,7 @@ public class HuffmanEncoder {
 	//printEncodings(getEncodingsFromTree(subtrees.get(0)));
 	HashMap<Character, String> m = (t.getCodingsAsMap());
 	byte[] enc = new byte[1048576]; // 1MB
-	System.out.println("Here comes");
+	//System.out.println("Here comes");
 	// encode all input data
 	
 	// I'm using a StringBuilder because there's no obvious limit
@@ -60,7 +60,7 @@ public class HuffmanEncoder {
 	int bytesWritten = 0;
 	for (int i = 0; i < csq.length(); i++) {
 	    // get this character's variable-length code from map m using the char as key
-	    System.out.println(m.get(csq.charAt(i)));
+	    //System.out.println(m.get(csq.charAt(i)));
 	    // append current character's code 
 	    // after whatever unused bits (up to 7) are left
 	    // over in holding

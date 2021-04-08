@@ -61,16 +61,16 @@ public class HuffmanDecoder {
 	    // if it's a 1 (true)
 	    if (bits.get()) {
 		curr = curr.right;
-		System.out.print("1");
+		//System.out.print("1");
 	    }
 	    else {
 		curr = curr.left;
-		System.out.print("0");
+		//System.out.print("0");
 	    }
 	    
 	    if (curr.c != null) {
 		dec[i++] = curr.c;
-		System.out.println(" makes " + curr.c);
+		//System.out.println(" makes " + curr.c);
 		curr = root;
 		origCharsAmount--;
 		

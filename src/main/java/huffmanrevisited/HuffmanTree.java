@@ -71,23 +71,47 @@ public class HuffmanTree {
 	}
 	return this;
     }
-    public HuffmanTree(Map<Character, Integer> probabilities) {
-	List<HuffmanTreeNode> subtrees = new LinkedList<>();
-	for (Character k : probabilities.keySet()) {
-	    subtrees.add(new HuffmanTreeNode(k, probabilities.get(k)));
+    public HuffmanTree(Map<Character, Integer> frequencies) {
+	// be good to handle 0 as well
+	if (frequencies.size() == 0) {
+	    root = null;
 	}
-	while (subtrees.size() > 1) {
-	    Collections.sort(subtrees); // I think this could be sped up by using a binary search + insert instead
-	    HuffmanTreeNode smallest = subtrees.remove(0);
-	    HuffmanTreeNode secondSmallest = subtrees.remove(0);
-	    //System.out.println("Combining the nodes containing chars " + smallest.c + " and " + secondSmallest.c);
-	    subtrees.add(new HuffmanTreeNode(smallest, secondSmallest));
+	// having only one distinct character will confuse the normal algorithm which
+	// takes pairs of subtrees (which are initially created one for each char).
+	// So we handle it specially. It's silly though because we need to
+	// have a pair of children from the root to make it a binary tree.
+	else if (frequencies.size() == 1) {
+	    HuffmanTreeNode n = new HuffmanTreeNode();
+	    HuffmanTreeNode left = new HuffmanTreeNode();
+	    HuffmanTreeNode right = new HuffmanTreeNode();
+	    left.c = (char) frequencies.keySet().toArray()[0]; // pluck out the single character
+	    n.left = left;
+	    right.c = (char) frequencies.keySet().toArray()[0]; // encode the same one for want of anything else
+	    n.right = right;
+	    root = n;
+	    
 	}
-	root = subtrees.get(0);
+	else {
+	    List<HuffmanTreeNode> subtrees = new LinkedList<>();
+	    for (Character k : frequencies.keySet()) {
+		subtrees.add(new HuffmanTreeNode(k, frequencies.get(k)));
+	    }
+	    while (subtrees.size() > 1) {
+		Collections.sort(subtrees); // I think this could be sped up by using a binary search + insert instead
+		HuffmanTreeNode smallest = subtrees.remove(0);
+		HuffmanTreeNode secondSmallest = subtrees.remove(0);
+		//System.out.println("Combining the nodes containing chars " + smallest.c + " and " + secondSmallest.c);
+		subtrees.add(new HuffmanTreeNode(smallest, secondSmallest));
+	    }
+	    root = subtrees.get(0);
+	}
     }
     // differentiated from the recursive function which must take a parameter to function
     public HashMap<Character, String> getCodingsAsMap() {
-	return getCodingsAsMap(root);
+	if (root != null) {
+	    return getCodingsAsMap(root);
+	}
+	else return new HashMap<Character, String>();
     }
     private HashMap<Character, String> getCodingsAsMap(HuffmanTreeNode n) {
 	if (n.left == null) {
@@ -120,7 +144,10 @@ public class HuffmanTree {
     }
     public byte[] compact() {
 	//StringBuilder sb = new StringBuilder(compactedSubtreeAsBinCsq(root));
-	return BinaryConversions.binCsqToByteArray(compactedSubtreeAsBinCsq(root));
+	if (root != null) {
+	    return BinaryConversions.binCsqToByteArray(compactedSubtreeAsBinCsq(root));
+	}
+	return new byte[0];
     }
     private CharSequence compactedSubtreeAsBinCsq(HuffmanTreeNode node) {
 	StringBuilder sb = new StringBuilder();
