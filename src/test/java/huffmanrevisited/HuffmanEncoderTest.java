@@ -147,7 +147,44 @@ public class HuffmanEncoderTest {
 	    (byte) 0x20};
 	byte[] result = instance.encode(csq);
 	assertArrayEquals(expResult, result);
-
+    }
+    /**
+     * Test of encode method, of class HuffmanEncoder.
+     */
+    @Test
+    public void testEncodeWithSingleDistinctCharInInputEightTimes() {
+	System.out.println("encode");
+	// BTW the Wikipedia example actually uses underscores
+	// which, I presume due to the vagaries of the sorting method
+	// result in a different permutation in the codes. At 
+	// least this test proves that the encoded data is the same, optimal length!
+	// but perhaps I should replace it with a test for length 
+	CharSequence csq = "aaaaaaaa";
+	HuffmanEncoder instance = new HuffmanEncoder();
+	// because we handled the special case of one distinct character
+	// in HuffmanEncoder by making two nodes with the same character
+	// the left node with code '0' gets overwritten in the final Map
+	// by the right node with code '1' (for the same char) because Maps
+	// can't contain duplicate keys, so we expect to get eight ones
+	// in the final data which as a signed byte is -1.
+	byte[] expResult = new byte[]{(byte) -1};
+	byte[] result = instance.encode(csq);
+	assertArrayEquals(expResult, result);
+    }
+    @Test
+    public void testEncodeWithSingleDistinctCharInInputOnce() {
+	System.out.println("encode");
+	CharSequence csq = "a";
+	HuffmanEncoder instance = new HuffmanEncoder();
+	// because we handled the special case of one distinct character
+	// in HuffmanEncoder by making two nodes with the same character
+	// the left node with code '0' gets overwritten in the final Map
+	// by the right node with code '1' (for the same char) because Maps
+	// can't contain duplicate keys, so we expect to get "10000000"
+	// in the final data after end-padding with zeros which as a signed byte is -128.
+	byte[] expResult = new byte[]{(byte) -128};
+	byte[] result = instance.encode(csq);
+	assertArrayEquals(expResult, result);
     }
     /**
      * Test of encode method, of class HuffmanEncoder.

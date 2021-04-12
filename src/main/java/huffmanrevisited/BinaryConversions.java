@@ -35,14 +35,14 @@ public class BinaryConversions {
 	char c = 0;
 	for (int i = 15; i >= 0; i--) {
 	    if (bits.get()) {
-		System.out.print("1");
+		//System.out.print("1");
 		c += Math.pow(2, i);
 	    }
 	    else {
-		System.out.print("0");
+		//System.out.print("0");
 	    }
 	}
-	System.out.println("Returning char with code " + (int) c);
+	//System.out.println("Returning char with code " + (int) c);
 	return c;
     }
     public static byte[] binCsqToByteArray(CharSequence csq) {
@@ -57,7 +57,7 @@ public class BinaryConversions {
 	    for (int i = 0; i < paddingLength; i++) {
 		padding.append('0');
 	    }
-	    System.out.println("BinaryConversions binCsqToByteArray... padding with " + padding + " bits " + paddingLength);
+	    //System.out.println("BinaryConversions binCsqToByteArray... padding with " + padding + " bits " + paddingLength);
 	    StringBuilder padded = new StringBuilder(csq);
 	    csq = padded.append(padding).toString();
 	} 

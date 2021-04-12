@@ -50,7 +50,7 @@ public class HuffmanEncoder {
 	//printEncodings(getEncodingsFromTree(subtrees.get(0)));
 	HashMap<Character, String> m = (t.getCodingsAsMap());
 	byte[] enc = new byte[1048576]; // 1MB
-	System.out.println("Here comes");
+	//System.out.println("Here comes");
 	// encode all input data
 	
 	// I'm using a StringBuilder because there's no obvious limit
@@ -60,44 +60,11 @@ public class HuffmanEncoder {
 	int bytesWritten = 0;
 	for (int i = 0; i < csq.length(); i++) {
 	    // get this character's variable-length code from map m using the char as key
-	    System.out.println(m.get(csq.charAt(i)));
 	    // append current character's code 
 	    // after whatever unused bits (up to 7) are left
 	    // over in holding
-	    holding.append(m.get(csq.charAt(i))); 
-	    /*
-	    // process any full bytes straight away
-	    // while there are any full bytes in holding
-	    while (holding.length() >= 8) {
-		CharSequence willMakeAByte = holding.subSequence(0, 8);
-		holding = new StringBuilder(holding.subSequence(8, holding.length()));
-		// write one byte to the encoded data array
-		byte madeIntoByte = binCsqToByte(willMakeAByte);
-		enc[bytesWritten++] = madeIntoByte;
-	    }
-*/
-	    
-
+	    holding.append(m.get(csq.charAt(i))); 	    
 	}
-	/*
-	// now to zero-wrap any data left over to complete a final byte!! And add it to encoded data
-	if (holding.length() > 0) {
-	    while (holding.length() < 8) {
-		holding.append('0');
-	    }
-	    
-	    System.out.println("Incomplete byte has length " + holding.length());
-	    System.out.println("Incomplete byte now padded to " + holding);
-	    
-	    enc[bytesWritten++] = binCsqToByte(holding); 
-	}
-
-	byte[] trimmed = Arrays.copyOf(enc, bytesWritten);
-	return trimmed;
-	*/
-	// Ha... calling a static method shows that this really wants
-	// to be a plain function, not part of an object!
-	// Perhaps I should make a utility class instead!
 	return BinaryConversions.binCsqToByteArray(holding);
     }
 
