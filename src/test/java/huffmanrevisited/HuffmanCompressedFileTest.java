@@ -48,7 +48,7 @@ public class HuffmanCompressedFileTest {
 	byte[] encodedData = null;
 	int origCharsAmount = 0;
 	HuffmanCompressedFile expResult = null;
-	HuffmanCompressedFile result = HuffmanCompressedFile.buildFrom(compactedTree, encodedData, origCharsAmount);
+	HuffmanCompressedFile result = new HuffmanCompressedFile(compactedTree, origCharsAmount, encodedData);
 	assertEquals(expResult, result);
 	// TODO review the generated test code and remove the default call to fail.
 	fail("The test case is a prototype.");

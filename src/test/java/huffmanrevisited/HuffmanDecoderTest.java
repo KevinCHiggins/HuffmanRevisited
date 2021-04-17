@@ -64,7 +64,7 @@ public class HuffmanDecoderTest {
 	HuffmanTree generated = enc.getTree();
 	byte[] generatedCompacted = generated.compact();
 	System.out.println("Compacted tree: " + BinaryConversions.byteArrayToBinCsq(generatedCompacted) + ". " + generatedCompacted.length + " bytes.");
-	HuffmanCompressedFile hcf = HuffmanCompressedFile.buildFrom(generatedCompacted, compressed, 5);
+	HuffmanCompressedFile hcf = new HuffmanCompressedFile(generatedCompacted, 5, compressed);
 	HuffmanDecoder instance = new HuffmanDecoder();
 
 	HuffmanTree result = instance.erectHuffmanTree(hcf.compactedTree);
@@ -85,10 +85,10 @@ public class HuffmanDecoderTest {
 	System.out.println("decodeDataUsingTree");
 	int charsToDecodeCount = 0;
 	byte[] ba = null;
-	HuffmanTreeNode root = null;
+	HuffmanTree tree = null;
 	HuffmanDecoder instance = new HuffmanDecoder();
 	CharSequence expResult = null;
-	CharSequence result = instance.decodeDataUsingTree(charsToDecodeCount, ba, root);
+	CharSequence result = instance.decodeDataUsingTree(charsToDecodeCount, ba, tree);
 	assertEquals(expResult, result);
 	// TODO review the generated test code and remove the default call to fail.
 	fail("The test case is a prototype.");

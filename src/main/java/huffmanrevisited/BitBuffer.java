@@ -7,29 +7,56 @@
 package huffmanrevisited;
 
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 
 /**
- * Need to investigate if I can legit call this a "stream"
- It takes a ByteBuffer and then feeds it back in single bits
- to any client calling its get() method
+ * Takes a ByteBuffer and then feeds it back in single bits
+ * to any client calling its get() method
+ * 
  * @author Kevin Higgins
  */
 public class BitBuffer {
     private ByteBuffer b;
     private byte currByte;
     private int inc;
+
+    /**
+     * Stores the byte array passed to it and puts the first byte into
+     * currByte where it is available one bit at a time to callers of
+     * this object's get method.
+     * @param ba    the byte array of data to be stored and returned bit-by-bit
+     */
     public BitBuffer(byte[] ba) {
-	b = ByteBuffer.wrap(ba);
+        byte[] copy = Arrays.copyOf(ba, ba.length);
+	b = ByteBuffer.wrap(copy);
 	currByte = b.get();
 	inc = 7;
     }
+    
+    /**
+     *  Returns the entirety of the original data that was passed to 
+     * this object's constructor.
+     * 
+     * @return  a byte array identical to that passed to this object's 
+     * constructor
+     */
     public byte[] getByteArray() {
 	return b.array();
     }
+    
     // only used for testing so far
-    public boolean hasBit() {
+    private boolean hasBit() {
 	return b.hasRemaining() || inc > 0;
     }
+
+    /**
+     * Returns the bit following
+     * the bit it returned the previous time it was called, or the first
+     * bit if it is being called for the first time since this bit buffer
+     * was constructed, from the stored data.
+     *
+     * @return  the next bit from the stored data
+     */
     public boolean get() {
 	if (inc < 0) {
 	    inc = 7;

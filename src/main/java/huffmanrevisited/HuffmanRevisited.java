@@ -16,12 +16,16 @@ import java.nio.CharBuffer;
 import java.nio.file.Files;
 
 /**
- *
+ * An app class for encoding and decoding text into/from HuffmanRevisited's
+ * proprietary compressed format.
  * @author Kevin
  */
 public class HuffmanRevisited {
 
     /**
+     * The entry point for command-line execution. Either encodes or decodes
+     * according to arguments received, or else prints an informative message.
+     * 
      * @param args the command line arguments
      */
     public static void main(String[] args) {
@@ -45,6 +49,14 @@ public class HuffmanRevisited {
 	    }
 	}
     }
+
+    /**
+     * Takes two pathnames and encodes the first, saving the results in
+     * Huffman compressed file format, to the second.
+     *
+     * @param inp   the pathname of the file to be encoded
+     * @param outp  the pathname of the file where the results are to be saved
+     */
     public static void encodeFileTo(File inp, File outp) {
 	try {
 	    
@@ -63,10 +75,10 @@ public class HuffmanRevisited {
 	    CharSequence csq = CharBuffer.wrap(cbuf);
 
 	    HuffmanEncoder enc = new HuffmanEncoder();
-
-	    byte[] compressed = enc.encode(csq);
+            enc.encode(csq);
+	    byte[] compressed = enc.getEncoded();
 	    HuffmanTree t = enc.getTree();
-	    HuffmanCompressedFile hcf = HuffmanCompressedFile.buildFrom(t.compact(), compressed, buffSize);
+	    HuffmanCompressedFile hcf = new HuffmanCompressedFile(t.compact(), buffSize, compressed);
 	    
 	    hcf.writeTo(outp);
 	    long length = Files.size(outp.toPath());
@@ -76,6 +88,15 @@ public class HuffmanRevisited {
 	    System.out.println("No encoding/decoding performed due to problem reading source file. " + e.getMessage());
 	}	
     }
+
+    /**
+     * Takes two pathnames and decodes the first (that is, it assumes it to be
+     * in Huffman compressed file format) and saves the decompressed data 
+     * to the second.
+     *
+     * @param inp   the pathname of the file to be decoded
+     * @param outp  the pathname of the file where the results are to be saved
+     */
     public static void decodeFileTo(File inp, File outp) {
 	try {
 

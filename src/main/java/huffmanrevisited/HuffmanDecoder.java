@@ -11,15 +11,28 @@ import java.nio.CharBuffer;
 import java.util.Arrays;
 
 /**
- *
+ * Decodes Huffman encoded data into text, by repeatedly traversing
+ * a Huffman tree passed into its decodeDataUsingTree method.
  * @author Kevin Higgins
  */
 public class HuffmanDecoder {
+
+    /**
+     * Erects a Huffman tree out of a compacted representation (see the {@link
+     * huffmanrevisited.HuffmanCompressedFile} class for details on compaction)
+     * THIS AND ITS ACCOMPANYING RECURSIVE METHOD SHOULD BE MOVED TO 
+     * HuffmanTree!
+     *
+     * @param compacted a byte array containing a compacted representation of a
+     * Huffman Tree
+     * @return the erected tree
+     */
     public HuffmanTree erectHuffmanTree(byte[] compacted) {
 	HuffmanTree t = new HuffmanTree();
 	t.setRoot(erectSubtreeFromCompactedData(new BitBuffer(compacted)));
 	return t;
     }
+    // recursive method to recreate tree from node data in pre-order
     private HuffmanTreeNode erectSubtreeFromCompactedData(BitBuffer bits) {
 	HuffmanTreeNode n;
 	if (bits.get() == false) { // if it's a parent node, not a leaf
@@ -34,10 +47,32 @@ public class HuffmanDecoder {
 	}
 	return n;
     }
+    
+    /**
+     * A convenience method to both erect a compacted tree and then use the
+     * tree so created to decode the given data.
+     * 
+     * @param origCharsAmount   the number of characters to decode from the data
+     * @param ba                a byte array holding the encoded (compressed) data
+     * @param compacted         a byte array holding a compacted representation of
+     * the Huffman tree to use in decoding the data
+     * @return                  decoded data
+     */    
     public CharSequence decodeDataUsingCompactedTree(int origCharsAmount, byte[] ba, byte[] compacted) {
-	return decodeDataUsingTree(origCharsAmount, ba, erectHuffmanTree(compacted).getRoot());
+	return decodeDataUsingTree(origCharsAmount, ba, erectHuffmanTree(compacted));
     }
-    public CharSequence decodeDataUsingTree(int origCharsAmount, byte[] ba, HuffmanTreeNode root) {
+    
+    /**
+     * Decodes compressed data by using it to guide traversals of
+     * the given Huffman Tree.
+     * 
+     * @param origCharsAmount   the amount of characters to decode
+     * @param ba                a byte array holding the compressed data
+     * @param t                 the tree holding the Huffman coding to use
+     * @return                  a character sequence holding the decoded text
+     */
+    public CharSequence decodeDataUsingTree(int origCharsAmount, byte[] ba, HuffmanTree t) {
+        HuffmanTreeNode root = t.getRoot();
 	/*
 	This loop builds up a StringBuilder depicting a trajectory down to
 	a terminal node, bit by bit, checking each move to see if 

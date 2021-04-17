@@ -14,8 +14,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * A Huffman tree, that is, a binary tree with characters at the leaf
+ * nodes, and with the frequency of all the characters at or below a
+ * certain node stored at that node. 
  *
  * @author Kevin Higgins
+ * @see {@link huffmanrevisited.HuffmanTreeNode}
  */
 public class HuffmanTree {
     private HuffmanTreeNode root;
@@ -27,12 +31,17 @@ public class HuffmanTree {
 	    root = n;
 	}
     }
+
+    /**
+     *
+     */
     public HuffmanTree() {
 	
     }
-    // for use in decoding
-    // can't be a constructor as name would clash with constructor taking Map<Character, Integer>
-    public HuffmanTree rebuildFromCodings (Map<Character, String> codings) {
+    
+    // Apparently not used?
+
+/*    public HuffmanTree rebuildFromCodings (Map<Character, String> codings) {
 	root = new HuffmanTreeNode();
 	// place each coded character properly in the tree
 	for (char c : codings.keySet()) {
@@ -71,6 +80,19 @@ public class HuffmanTree {
 	}
 	return this;
     }
+*/
+    /**
+     * An implementation of the Huffman coding algorithm
+     * that builds a tree out of a list of subtrees by repeatedly joining the
+     * two subtrees with the lowest total character-occurrence-frequency into a 
+     * new subtree containing them as its children.
+     * <p>
+     * This algorithm has been placed in the constructor because
+     * it is what defines a Huffman tree conceptually.
+     * 
+     * @param frequencies a map of character frequencies in the text to be
+     * compressed
+     */
     public HuffmanTree(Map<Character, Integer> frequencies) {
 	// be good to handle 0 as well
 	if (frequencies.size() == 0) {
@@ -106,21 +128,29 @@ public class HuffmanTree {
 	    root = subtrees.get(0);
 	}
     }
-    // differentiated from the recursive function which must take a parameter to function
-    public HashMap<Character, String> getCodingsAsMap() {
+    /**
+     * A convenience method to start the recursive process of traversing
+     * the Huffman tree to create a map of characters to codes
+     * 
+     * @return a map or dictionary of characters in which their
+     * respective code can be looked up
+     */
+    public Map<Character, String> getCodingsAsMap() {
 	if (root != null) {
 	    return getCodingsAsMap(root);
 	}
-	else return new HashMap<Character, String>();
+	else return new HashMap<>();
     }
-    private HashMap<Character, String> getCodingsAsMap(HuffmanTreeNode n) {
+    
+    // the actual recursive traversal
+    private Map<Character, String> getCodingsAsMap(HuffmanTreeNode n) {
 	if (n.left == null) {
 	    HashMap<Character, String> m = new HashMap<>();
 	    m.put(n.c, "");
 	    return m;
 	}
-	HashMap<Character, String> leftCodings = getCodingsAsMap(n.left);
-	HashMap<Character, String> rightCodings = getCodingsAsMap(n.right);
+	Map<Character, String> leftCodings = getCodingsAsMap(n.left);
+	Map<Character, String> rightCodings = getCodingsAsMap(n.right);
 	
 	for (char c : leftCodings.keySet()) {
 	    leftCodings.put(c, 0 + leftCodings.get(c)); // better to use StringBuilder?
@@ -131,10 +161,17 @@ public class HuffmanTree {
 	leftCodings.putAll(rightCodings);
 	return leftCodings;	
     }
-    // a depth first traversal yielding nodes in pre-order
+    /**
+     * A convenience method that makes a call to a recursive depth-first traversal 
+     * yielding nodes in pre-order.
+     * 
+     * @return a list of the nodes of this Huffman tree in pre-order
+     */
     public List<HuffmanTreeNode> asNodesInPreOrder() {
 	return asNodesInPreOrder(root);
     }
+    
+    // the actual recursive traversal
     private List<HuffmanTreeNode> asNodesInPreOrder(HuffmanTreeNode node) {	
 	List l = new LinkedList<HuffmanTreeNode>();
 	l.add(node);
@@ -142,6 +179,13 @@ public class HuffmanTree {
 	if (node.right != null) l.addAll(asNodesInPreOrder(node.right));
 	return l;
     }
+
+    /**
+     * Returns a compacted, raw binary representation of this tree.
+     * 
+     * @return a byte array containing a compact binary representation of this 
+     * tree
+     */
     public byte[] compact() {
 	//StringBuilder sb = new StringBuilder(compactedSubtreeAsBinCsq(root));
 	if (root != null) {
@@ -149,6 +193,7 @@ public class HuffmanTree {
 	}
 	return new byte[0];
     }
+    
     private CharSequence compactedSubtreeAsBinCsq(HuffmanTreeNode node) {
 	StringBuilder sb = new StringBuilder();
 	if (node.c != null) {
@@ -164,39 +209,5 @@ public class HuffmanTree {
 	System.out.println("compactedSubtreeAsBinCsq: StringBuilder: " + sb);
 	return sb;
     }
-    /*
-    private class HuffmanEncodedChar {
-	Character ch;
-	String co;
-	HuffmanEncodedChar (Character ch, String co) {
-	    this.ch = ch;
-	    this.co = co;
-	}
-    }
 
-    // a test method
-    private void printEncodings(List<HuffmanEncodedChar> l) {
-	for (HuffmanEncodedChar c : l) {
-	    System.out.println("Character " + c.ch + " has encoding " + c.co);
-	}
-    }
-    private List<HuffmanEncoder.HuffmanEncodedChar> getEncodingsFromTree(HuffmanTreeNode n) {
-	if (n.left == null) {
-	    ArrayList<HuffmanEncoder.HuffmanEncodedChar> l = new ArrayList<>();
-	    l.add(new HuffmanEncoder.HuffmanEncodedChar(n.c, ""));
-	    return l;
-	}
-	List<HuffmanEncoder.HuffmanEncodedChar> leftEncodings = getEncodingsFromTree(n.left);
-	List<HuffmanEncoder.HuffmanEncodedChar> rightEncodings = getEncodingsFromTree(n.right);
-	for (HuffmanEncoder.HuffmanEncodedChar c : leftEncodings) {
-	    c.co = "0" + c.co;
-	}
-	for (HuffmanEncoder.HuffmanEncodedChar c : rightEncodings) {
-	    c.co = "1" + c.co;
-	}
-	leftEncodings.addAll(rightEncodings);
-	return leftEncodings;
-    }
-
-    */
 }
