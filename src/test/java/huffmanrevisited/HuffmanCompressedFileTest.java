@@ -39,11 +39,15 @@ public class HuffmanCompressedFileTest {
     }
 
     /**
-     * Test of buildFrom method, of class HuffmanCompressedFile.
-     */
+     * Test of HuffmanCompressedFile method, of class HuffmanCompressedFile.
+     * This constructor is tested implicitly in HuffmanRevisitedTest's
+     * calls to HuffmanRevisited.writeFileTo
+     * HuffmanCompressedFile has no public properties
+     * so there's no obvious way to test the constructor's basic functionality
+     * independently.
     @Test
-    public void testBuildFrom() {
-	System.out.println("buildFrom");
+    public void testHuffmanCompressedFile() {
+	System.out.println("HuffmanCompressedFile");
 	byte[] compactedTree = null;
 	byte[] encodedData = null;
 	int origCharsAmount = 0;
@@ -53,6 +57,7 @@ public class HuffmanCompressedFileTest {
 	// TODO review the generated test code and remove the default call to fail.
 	fail("The test case is a prototype.");
     }
+     */
 
     /**
      * Test of writeTo method, of class HuffmanCompressedFile.
@@ -66,13 +71,14 @@ public class HuffmanCompressedFileTest {
 	instance.encodedData = TestData.UP_TO_EIGHT_INSTANCES_OF_SINGLE_CHAR_ENCODED_DATA;
 	instance.origCharsAmount = 3;
 	instance.writeTo(f);
-	// TODO review the generated test code and remove the default call to fail.
-	//fail("The test case is a prototype.");
+
     }
 
     /**
      * Test of loadFrom method, of class HuffmanCompressedFile.
-     */
+     * This is also tested in many of HuffmanRevisitedTest's run-throughs
+     * of an encoding-decoding sequence.
+
     @Test
     public void testLoadFrom() throws Exception {
 	System.out.println("loadFrom");
@@ -83,5 +89,5 @@ public class HuffmanCompressedFileTest {
 	// TODO review the generated test code and remove the default call to fail.
 	fail("The test case is a prototype.");
     }
-    
+     */    
 }

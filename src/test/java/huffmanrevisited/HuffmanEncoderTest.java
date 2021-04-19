@@ -8,6 +8,7 @@ package huffmanrevisited;
 import huffmanrevisited.HuffmanTreeNode;
 import huffmanrevisited.HuffmanEncoder;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
@@ -53,7 +54,7 @@ public class HuffmanEncoderTest {
 	HashMap<Character, Integer> expResult = new HashMap<>();
 	expResult.put('a', 1);
 	expResult.put('b', 1);
-	HashMap<Character, Integer> result = instance.calcFreqs(csq);
+	Map<Character, Integer> result = instance.calcFreqs(csq);
 	Set keys = result.keySet();
 	for (Character k : result.keySet()) {
 	    assertEquals(result.get(k), expResult.get(k));
@@ -65,7 +66,7 @@ public class HuffmanEncoderTest {
 	System.out.println("calcFreqs");
 	CharSequence csq = "";
 	HuffmanEncoder instance = new HuffmanEncoder();
-	HashMap<Character, Integer> result = instance.calcFreqs(csq);
+	Map<Character, Integer> result = instance.calcFreqs(csq);
 	Set keys = result.keySet();
 
 	assertEquals(result.size(), 0);	
@@ -109,7 +110,7 @@ public class HuffmanEncoderTest {
 	expResult.put('x', 1);
 	expResult.put('y', 1);
 	expResult.put('z', 1);
-	HashMap<Character, Integer> result = instance.calcFreqs(csq);
+	Map<Character, Integer> result = instance.calcFreqs(csq);
 	Set keys = result.keySet();
 	for (Character k : result.keySet()) {
 	    assertEquals(result.get(k), expResult.get(k));
@@ -145,7 +146,8 @@ public class HuffmanEncoderTest {
 	    (byte) 0xBA,
 	    (byte) 0x3F,
 	    (byte) 0x20};
-	byte[] result = instance.encode(csq);
+	instance.encode(csq);
+        byte[] result = instance.getEncoded();
 	assertArrayEquals(expResult, result);
     }
     /**
@@ -168,7 +170,8 @@ public class HuffmanEncoderTest {
 	// can't contain duplicate keys, so we expect to get eight ones
 	// in the final data which as a signed byte is -1.
 	byte[] expResult = new byte[]{(byte) -1};
-	byte[] result = instance.encode(csq);
+	instance.encode(csq);
+        byte[] result = instance.getEncoded();
 	assertArrayEquals(expResult, result);
     }
     @Test
@@ -183,7 +186,8 @@ public class HuffmanEncoderTest {
 	// can't contain duplicate keys, so we expect to get "10000000"
 	// in the final data after end-padding with zeros which as a signed byte is -128.
 	byte[] expResult = new byte[]{(byte) -128};
-	byte[] result = instance.encode(csq);
+	instance.encode(csq);
+        byte[] result = instance.getEncoded();
 	assertArrayEquals(expResult, result);
     }
     /**
@@ -214,7 +218,8 @@ public class HuffmanEncoderTest {
 	    (byte) 0xBA,
 	    (byte) 0x3F,
 	    (byte) 0x20};
-	byte[] result = instance.encode(csq);
+	instance.encode(csq);
+        byte[] result = instance.getEncoded();
 	assertEquals(expResult.length, result.length);
 
     }

@@ -47,16 +47,17 @@ public class HuffmanTreeTest {
     @Test
     public void testGetRoot() {
 	System.out.println("getRoot");
-	HuffmanTree instance = null;
-	HuffmanTreeNode expResult = null;
+	HuffmanTree instance = new HuffmanTree();
+        HuffmanTreeNode expResult = new HuffmanTreeNode('a', 20);
+        instance.setRoot(expResult);
+	
 	HuffmanTreeNode result = instance.getRoot();
 	assertEquals(expResult, result);
-	// TODO review the generated test code and remove the default call to fail.
-	fail("The test case is a prototype.");
+
     }
     /**
-     * Test of rebuildFromCodings method, of class HuffmanTree.
-     */
+     * Test of rebuildFromCodings method, of class HuffmanTree. NOT USED.
+     
     public void testRebuildFromCodings() {
 	System.out.println("rebuildFromCodings");
 	Map<Character, String> codings = new HashMap<>();
@@ -69,31 +70,56 @@ public class HuffmanTreeTest {
 	assertEquals(resultCodings.get('a'), "0");
 	assertEquals(resultCodings.get('b'), "1");	
     }
-
+*/
     /**
-     * Test of getCodingsAsMap method, of class HuffmanTree.
+     * Test of getCodingsAsMap method, of class HuffmanTree. Make a
+     * trivially easily-visualised Huffman tree of three characters.
      */
     
     @Test
     public void testGetCodingsAsMap() {
 	System.out.println("getCodingsAsMap");
-	HuffmanTree instance = null;
-	HashMap<Character, String> expResult = null;
-	HashMap<Character, String> result = instance.getCodingsAsMap();
+        // let's manually make the tree that should result
+        // from the (Character, Integer) pairs ('a', 3), ('b', 1), ('c', 2)
+        //             root
+        //            /    \
+        //    ('a', 3)     rightParent
+        //                 /    \
+        //            ('c', 2)  ('b', 1)  <- would be sorted by frequency descending
+        HuffmanTreeNode leftLeaf = new HuffmanTreeNode('a', 3);
+        HuffmanTreeNode rightRightLeaf = new HuffmanTreeNode('b', 1);
+        HuffmanTreeNode rightLeftLeaf = new HuffmanTreeNode('c', 2);
+        HuffmanTreeNode rightParent = new HuffmanTreeNode(rightLeftLeaf, rightRightLeaf);
+        HuffmanTreeNode r = new HuffmanTreeNode(leftLeaf, rightParent);
+	Map<Character, String> expResult = new HashMap<>();
+        expResult.put('a', "0");
+        expResult.put('b', "11");
+        expResult.put('c', "10");
+        HuffmanTree instance = new HuffmanTree();
+        instance.setRoot(r);
+	Map<Character, String> result = instance.getCodingsAsMap();
 	assertEquals(expResult, result);
-	// TODO review the generated test code and remove the default call to fail.
-	fail("The test case is a prototype.");
     }
     @Test
     public void testCompact() {
 	System.out.println("compact");
 	HuffmanEncoder enc = new HuffmanEncoder();
-
-	byte[] compressed = enc.encode("A");
+        enc.encode("ABBB");
+	byte[] compressed = enc.getEncoded();
 	HuffmanTree instance = enc.getTree();
 	System.out.println("Chars in map from tree: " + instance.getCodingsAsMap().size());
 	byte[] compacted = instance.compact();
-	assertEquals(new byte[]{(byte) 128, (byte) 0, (byte) 32, (byte) 128}, compacted);
+        // we expect this tree:
+        //          root
+        //        /     \
+        //    ('B', 3)  ('A', 1)
+        // which makes root  left child 'B'               right child 'A'
+        //              0          1     0000000001000001  1           0000000001000001
+        // which makes, in bytes, with zero-padding added
+        //  01000000-00010000-01100000-00001000-00100000
+        //  64        16        96        8        64
+	assertArrayEquals(new byte[]{(byte) 64, (byte) 16, (byte) 96, (byte) 8, (byte) 64}, compacted);
+        
 	System.out.println("Compacted tree: " + BinaryConversions.byteArrayToBinCsq(compacted) + ". " + compacted.length + " bytes.");
 
 	

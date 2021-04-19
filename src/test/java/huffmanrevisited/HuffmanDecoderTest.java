@@ -5,6 +5,7 @@
  */
 package huffmanrevisited;
 
+import java.nio.CharBuffer;
 import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.AfterEach;
@@ -60,7 +61,9 @@ public class HuffmanDecoderTest {
 	System.out.println("erectHuffmanTree");
 	HuffmanEncoder enc = new HuffmanEncoder();
 
-	byte[] compressed = enc.encode("Hello");
+	
+        enc.encode("Hello");
+        byte[] compressed = enc.getEncoded();
 	HuffmanTree generated = enc.getTree();
 	byte[] generatedCompacted = generated.compact();
 	System.out.println("Compacted tree: " + BinaryConversions.byteArrayToBinCsq(generatedCompacted) + ". " + generatedCompacted.length + " bytes.");
@@ -83,15 +86,23 @@ public class HuffmanDecoderTest {
     @Test
     public void testDecodeDataUsingTree() {
 	System.out.println("decodeDataUsingTree");
-	int charsToDecodeCount = 0;
-	byte[] ba = null;
-	HuffmanTree tree = null;
+	int charsToDecodeCount = 9;
+	// 00011100-00000000, see below
+        byte[] ba = new byte[] {(byte)28, (byte) 0};
+        // Hand-make a tree:
+        //          root
+        //        /     \
+        //    ('s', 6)  ('l', 3)
+        HuffmanTreeNode left = new HuffmanTreeNode('s', 6);
+        HuffmanTreeNode right = new HuffmanTreeNode('l', 3);
+	HuffmanTreeNode root = new HuffmanTreeNode(left, right);
+        HuffmanTree tree = new HuffmanTree();
+        tree.setRoot(root);
 	HuffmanDecoder instance = new HuffmanDecoder();
-	CharSequence expResult = null;
+	CharSequence expResult = "ssslllsss"; // should encode as 000111000 and padding 0000000
 	CharSequence result = instance.decodeDataUsingTree(charsToDecodeCount, ba, tree);
-	assertEquals(expResult, result);
-	// TODO review the generated test code and remove the default call to fail.
-	fail("The test case is a prototype.");
+	assertEquals(CharBuffer.wrap(expResult), CharBuffer.wrap(result));
+	
     }
     
 }

@@ -66,7 +66,7 @@ public class HuffmanEncoder {
 	*/
 	//printEncodings(getEncodingsFromTree(subtrees.get(0)));
 	Map<Character, String> m = (t.getCodingsAsMap());
-	byte[] enc = new byte[1048576]; // 1MB
+	
 	//System.out.println("Here comes");
 	// encode all input data
 	

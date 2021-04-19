@@ -77,6 +77,7 @@ public class HuffmanCompressedFile {
 	fos.write(compactedTree);
 	fos.write(BinaryConversions.intToByteArray(origCharsAmount)); // length in chars of original uncompressed text
 	System.out.println("Writing length of original text " + origCharsAmount);
+        System.out.println("Length of encoded data " + encodedData.length);
 	fos.write(encodedData);
 
     }

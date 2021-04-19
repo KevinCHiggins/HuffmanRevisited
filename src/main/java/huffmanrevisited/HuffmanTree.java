@@ -128,6 +128,10 @@ public class HuffmanTree {
 	    root = subtrees.get(0);
 	}
     }
+    // the below methods should be encapsulated in their own class, maybe? Hmm,
+    // but the other opinion is that they only ever work on a Huffman tree and
+    // should be part of it. So maybe it's more about making the tests more
+    // sensible.
     /**
      * A convenience method to start the recursive process of traversing
      * the Huffman tree to create a map of characters to codes
@@ -199,6 +203,7 @@ public class HuffmanTree {
 	if (node.c != null) {
 	    sb.append('1'); // an idea from Wikipedia article - 1 signifies a leaf
 	    sb.append(BinaryConversions.charToBinCsq(node.c));
+            // each leaf is followed by 16 bits defining a char
 	    System.out.println("compactedSubtreeAsBinCsq: added CharSequence " + BinaryConversions.charToBinCsq(node.c));
 	}
 	else {
